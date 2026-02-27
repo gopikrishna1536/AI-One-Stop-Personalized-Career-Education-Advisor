@@ -965,3 +965,162 @@ async def seed_initial_data():
         ]
         await db.timeline_events.insert_many(sample_events)
         logger.info("Sample timeline events seeded")
+    
+    questions_count = await db.aptitude_questions.count_documents({})
+    if questions_count == 0:
+        aptitude_questions = [
+            {
+                "id": str(uuid.uuid4()),
+                "question": "What type of activities do you enjoy the most?",
+                "options": [
+                    {"text": "Solving mathematical problems and logical puzzles", "domains": {"Technology": 3, "Science": 2}},
+                    {"text": "Understanding how things work scientifically", "domains": {"Science": 3, "Medical": 2}},
+                    {"text": "Managing money and business planning", "domains": {"Commerce": 3, "Entrepreneurship": 2}},
+                    {"text": "Creative writing, art, and expressing ideas", "domains": {"Arts": 3}},
+                    {"text": "Helping people and community service", "domains": {"Medical": 2, "Government_Jobs": 2}}
+                ],
+                "category": "interests"
+            },
+            {
+                "id": str(uuid.uuid4()),
+                "question": "Which subject do you find most interesting?",
+                "options": [
+                    {"text": "Computer Science and Programming", "domains": {"Technology": 3}},
+                    {"text": "Physics and Chemistry", "domains": {"Science": 3}},
+                    {"text": "Biology and Life Sciences", "domains": {"Medical": 3, "Science": 1}},
+                    {"text": "Mathematics and Statistics", "domains": {"Technology": 2, "Commerce": 2}},
+                    {"text": "Accountancy and Economics", "domains": {"Commerce": 3}},
+                    {"text": "History, Political Science, Literature", "domains": {"Arts": 3, "Government_Jobs": 1}}
+                ],
+                "category": "academics"
+            },
+            {
+                "id": str(uuid.uuid4()),
+                "question": "What kind of career appeals to you the most?",
+                "options": [
+                    {"text": "Working with technology and innovation", "domains": {"Technology": 3}},
+                    {"text": "Conducting research and experiments", "domains": {"Science": 3}},
+                    {"text": "Treating patients and healthcare", "domains": {"Medical": 3}},
+                    {"text": "Managing finances and businesses", "domains": {"Commerce": 2, "Entrepreneurship": 2}},
+                    {"text": "Public service and administration", "domains": {"Government_Jobs": 3}},
+                    {"text": "Creative fields like media, arts, writing", "domains": {"Arts": 3}}
+                ],
+                "category": "career"
+            },
+            {
+                "id": str(uuid.uuid4()),
+                "question": "How do you prefer to solve problems?",
+                "options": [
+                    {"text": "Using logic and algorithms", "domains": {"Technology": 3, "Science": 1}},
+                    {"text": "Through experimentation and observation", "domains": {"Science": 3}},
+                    {"text": "By understanding people and their needs", "domains": {"Medical": 2, "Arts": 2}},
+                    {"text": "Analyzing data and financial information", "domains": {"Commerce": 3}},
+                    {"text": "Using rules, policies, and frameworks", "domains": {"Government_Jobs": 3}}
+                ],
+                "category": "problem_solving"
+            },
+            {
+                "id": str(uuid.uuid4()),
+                "question": "What motivates you the most?",
+                "options": [
+                    {"text": "Building innovative products and solutions", "domains": {"Technology": 3, "Entrepreneurship": 2}},
+                    {"text": "Making scientific discoveries", "domains": {"Science": 3}},
+                    {"text": "Helping people live healthier lives", "domains": {"Medical": 3}},
+                    {"text": "Financial success and business growth", "domains": {"Commerce": 2, "Entrepreneurship": 3}},
+                    {"text": "Serving society and making policy changes", "domains": {"Government_Jobs": 3}},
+                    {"text": "Creative expression and cultural impact", "domains": {"Arts": 3}}
+                ],
+                "category": "motivation"
+            },
+            {
+                "id": str(uuid.uuid4()),
+                "question": "Which work environment suits you best?",
+                "options": [
+                    {"text": "Tech companies and startups", "domains": {"Technology": 3, "Entrepreneurship": 1}},
+                    {"text": "Research labs and universities", "domains": {"Science": 3}},
+                    {"text": "Hospitals and clinics", "domains": {"Medical": 3}},
+                    {"text": "Corporate offices and banks", "domains": {"Commerce": 3}},
+                    {"text": "Government offices and administration", "domains": {"Government_Jobs": 3}},
+                    {"text": "Creative studios and media houses", "domains": {"Arts": 3}}
+                ],
+                "category": "environment"
+            },
+            {
+                "id": str(uuid.uuid4()),
+                "question": "What are your key strengths?",
+                "options": [
+                    {"text": "Programming and technical skills", "domains": {"Technology": 3}},
+                    {"text": "Analytical and research abilities", "domains": {"Science": 3, "Technology": 1}},
+                    {"text": "Empathy and patient care", "domains": {"Medical": 3, "Arts": 1}},
+                    {"text": "Financial planning and business acumen", "domains": {"Commerce": 3, "Entrepreneurship": 2}},
+                    {"text": "Leadership and public speaking", "domains": {"Government_Jobs": 2, "Entrepreneurship": 2}},
+                    {"text": "Creativity and communication", "domains": {"Arts": 3}}
+                ],
+                "category": "strengths"
+            },
+            {
+                "id": str(uuid.uuid4()),
+                "question": "Which competitive exam interests you?",
+                "options": [
+                    {"text": "JEE (Engineering entrance)", "domains": {"Technology": 3, "Science": 2}},
+                    {"text": "NEET (Medical entrance)", "domains": {"Medical": 3}},
+                    {"text": "CA/CS/CMA exams", "domains": {"Commerce": 3}},
+                    {"text": "UPSC Civil Services", "domains": {"Government_Jobs": 3, "Arts": 1}},
+                    {"text": "CUET/University entrances", "domains": {"Arts": 2, "Science": 1}}
+                ],
+                "category": "exams"
+            },
+            {
+                "id": str(uuid.uuid4()),
+                "question": "How do you spend your free time?",
+                "options": [
+                    {"text": "Coding projects or tech experiments", "domains": {"Technology": 3}},
+                    {"text": "Reading science articles and documentaries", "domains": {"Science": 3}},
+                    {"text": "Volunteering for health/social causes", "domains": {"Medical": 2, "Government_Jobs": 1}},
+                    {"text": "Following business news and markets", "domains": {"Commerce": 3, "Entrepreneurship": 1}},
+                    {"text": "Writing, art, music, or creative hobbies", "domains": {"Arts": 3}}
+                ],
+                "category": "hobbies"
+            },
+            {
+                "id": str(uuid.uuid4()),
+                "question": "What is your career goal?",
+                "options": [
+                    {"text": "Become a software engineer or tech entrepreneur", "domains": {"Technology": 3, "Entrepreneurship": 2}},
+                    {"text": "Work as a scientist or researcher", "domains": {"Science": 3}},
+                    {"text": "Become a doctor or healthcare professional", "domains": {"Medical": 3}},
+                    {"text": "Build a successful business or work in finance", "domains": {"Commerce": 2, "Entrepreneurship": 3}},
+                    {"text": "Join civil services (IAS/IPS/IFS)", "domains": {"Government_Jobs": 3}},
+                    {"text": "Work in creative fields (media, arts, literature)", "domains": {"Arts": 3}}
+                ],
+                "category": "goals"
+            },
+            {
+                "id": str(uuid.uuid4()),
+                "question": "Which skill would you like to develop further?",
+                "options": [
+                    {"text": "Programming and software development", "domains": {"Technology": 3}},
+                    {"text": "Scientific research methods", "domains": {"Science": 3}},
+                    {"text": "Medical knowledge and patient care", "domains": {"Medical": 3}},
+                    {"text": "Financial analysis and accounting", "domains": {"Commerce": 3}},
+                    {"text": "Public policy and governance", "domains": {"Government_Jobs": 3}},
+                    {"text": "Creative arts and communication", "domains": {"Arts": 3}}
+                ],
+                "category": "skills"
+            },
+            {
+                "id": str(uuid.uuid4()),
+                "question": "What type of impact do you want to make?",
+                "options": [
+                    {"text": "Technological innovation and digital transformation", "domains": {"Technology": 3}},
+                    {"text": "Scientific breakthroughs and discoveries", "domains": {"Science": 3}},
+                    {"text": "Improving public health and saving lives", "domains": {"Medical": 3}},
+                    {"text": "Economic growth and job creation", "domains": {"Commerce": 2, "Entrepreneurship": 3}},
+                    {"text": "Policy changes and social reforms", "domains": {"Government_Jobs": 3, "Arts": 1}},
+                    {"text": "Cultural influence and artistic expression", "domains": {"Arts": 3}}
+                ],
+                "category": "impact"
+            }
+        ]
+        await db.aptitude_questions.insert_many(aptitude_questions)
+        logger.info("Aptitude test questions seeded")
