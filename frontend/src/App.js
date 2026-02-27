@@ -52,6 +52,8 @@ function App() {
           <Route path="/timeline" element={<ProtectedRoute><TimelinePage user={user} /></ProtectedRoute>} />
           <Route path="/profile" element={<ProtectedRoute><ProfilePage user={user} setUser={setUser} /></ProtectedRoute>} />
           <Route path="/admin" element={<ProtectedRoute><AdminDashboard user={user} /></ProtectedRoute>} />
+          <Route path="/aptitude-test" element={<ProtectedRoute><AptitudeTestPage user={user} /></ProtectedRoute>} />
+          <Route path="/aptitude-result/:resultId" element={<ProtectedRoute><AptitudeResultPage user={user} /></ProtectedRoute>} />
         </Routes>
       </BrowserRouter>
       <Toaster position="top-right" expand={false} richColors />
