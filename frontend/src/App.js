@@ -11,6 +11,8 @@ import CollegesPage from '@/pages/CollegesPage';
 import TimelinePage from '@/pages/TimelinePage';
 import ProfilePage from '@/pages/ProfilePage';
 import AdminDashboard from '@/pages/AdminDashboard';
+import AptitudeTestPage from '@/pages/AptitudeTestPage';
+import AptitudeResultPage from '@/pages/AptitudeResultPage';
 import { Toaster } from '@/components/ui/sonner';
 
 function App() {
