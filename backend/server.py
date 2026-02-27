@@ -517,6 +517,329 @@ async def get_analytics(current_user: dict = Depends(get_current_user)):
         "stream_distribution": stream_distribution
     }
 
+@api_router.get("/aptitude-test/questions")
+async def get_aptitude_questions(current_user: dict = Depends(get_current_user)):
+    questions = await db.aptitude_questions.find({}, {"_id": 0}).to_list(100)
+    return {"questions": questions}
+
+@api_router.post("/aptitude-test/submit")
+async def submit_aptitude_test(submission: AptitudeTestSubmission, current_user: dict = Depends(get_current_user)):
+    questions = await db.aptitude_questions.find({}, {"_id": 0}).to_list(100)
+    
+    domain_scores = {
+        "Science": 0,
+        "Technology": 0,
+        "Medical": 0,
+        "Commerce": 0,
+        "Arts": 0,
+        "Government_Jobs": 0,
+        "Entrepreneurship": 0
+    }
+    
+    for answer in submission.answers:
+        question = next((q for q in questions if q['id'] == answer.question_id), None)
+        if question and 0 <= answer.selected_option < len(question['options']):
+            selected_option = question['options'][answer.selected_option]
+            if 'domains' in selected_option:
+                for domain in selected_option['domains']:
+                    if domain in domain_scores:
+                        domain_scores[domain] += selected_option['domains'][domain]
+    
+    sorted_domains = sorted(domain_scores.items(), key=lambda x: x[1], reverse=True)
+    top_domains = sorted_domains[:3]
+    
+    career_suggestions = []
+    college_recommendations = []
+    coding_timeline = []
+    roadmap = []
+    
+    primary_domain = top_domains[0][0]
+    
+    if primary_domain in ["Technology", "Science"]:
+        career_suggestions = [
+            {"title": "Software Engineer", "description": "Design and develop software applications", "salary": "₹6-25 LPA"},
+            {"title": "Data Scientist", "description": "Analyze and interpret complex data", "salary": "₹8-30 LPA"},
+            {"title": "Full Stack Developer", "description": "Build complete web applications", "salary": "₹5-20 LPA"},
+            {"title": "AI/ML Engineer", "description": "Develop AI and machine learning models", "salary": "₹10-35 LPA"}
+        ]
+        
+        college_recommendations = [
+            {
+                "name": "SRM University",
+                "location": "Chennai, Tamil Nadu",
+                "courses": ["B.Tech CSE", "B.Tech AI&ML", "B.Tech Data Science"],
+                "ranking": "NIRF Ranked #26",
+                "admission": "SRMJEEE",
+                "fees": "₹2.5-3 Lakhs per year",
+                "placements": "Average: ₹8 LPA, Highest: ₹42 LPA",
+                "website": "https://www.srmist.edu.in"
+            },
+            {
+                "name": "VIT Chennai",
+                "location": "Chennai, Tamil Nadu",
+                "courses": ["B.Tech CSE", "B.Tech IT", "B.Tech ECE", "B.Tech Mechanical"],
+                "ranking": "NIRF Ranked #15",
+                "admission": "VITEEE",
+                "fees": "₹1.98 Lakhs per year",
+                "placements": "Average: ₹7.5 LPA, Highest: ₹41.6 LPA",
+                "website": "https://vit.ac.in"
+            },
+            {
+                "name": "IIT Madras",
+                "location": "Chennai, Tamil Nadu",
+                "courses": ["B.Tech", "Dual Degree Programs"],
+                "ranking": "NIRF Ranked #1",
+                "admission": "JEE Advanced",
+                "fees": "₹2 Lakhs per year",
+                "placements": "Average: ₹16 LPA, Highest: ₹1.5 Cr",
+                "website": "https://www.iitm.ac.in"
+            },
+            {
+                "name": "Anna University",
+                "location": "Chennai, Tamil Nadu",
+                "courses": ["B.E/B.Tech in various specializations"],
+                "ranking": "NIRF Ranked #18",
+                "admission": "TNEA",
+                "fees": "₹50,000-1 Lakh per year",
+                "placements": "Average: ₹4.5 LPA",
+                "website": "https://www.annauniv.edu"
+            }
+        ]
+        
+        coding_timeline = [
+            {
+                "week": "Week 1-2",
+                "focus": "Basics & Setup",
+                "topics": ["Programming fundamentals", "Data structures basics"],
+                "platforms": ["CodeChef (Beginner problems)", "HackerRank"],
+                "practice": "Solve 5 easy problems daily on CodeChef",
+                "goal": "Build foundation"
+            },
+            {
+                "week": "Week 3-4",
+                "focus": "Arrays & Strings",
+                "topics": ["Array manipulation", "String algorithms"],
+                "platforms": ["CodeChef (Easy-Medium)", "LeetCode"],
+                "practice": "3-4 medium problems daily",
+                "goal": "Master basic data structures"
+            },
+            {
+                "week": "Week 5-8",
+                "focus": "Algorithms",
+                "topics": ["Sorting", "Searching", "Recursion"],
+                "platforms": ["CodeChef Long Challenge", "Codeforces"],
+                "practice": "Participate in CodeChef contests",
+                "goal": "Competitive programming basics"
+            },
+            {
+                "week": "Week 9-12",
+                "focus": "Advanced DS",
+                "topics": ["Trees", "Graphs", "Dynamic Programming"],
+                "platforms": ["CodeChef", "GeeksforGeeks"],
+                "practice": "2-3 hard problems daily",
+                "goal": "Advanced problem solving"
+            }
+        ]
+        
+        roadmap = [
+            {
+                "month": "Month 1",
+                "title": "Foundation Building",
+                "tasks": [
+                    "Learn programming basics (Python/C++/Java)",
+                    "Start CodeChef practice (Beginner level)",
+                    "Study data structures fundamentals",
+                    "Join online coding communities"
+                ],
+                "milestone": "Solve 50+ easy problems on CodeChef"
+            },
+            {
+                "month": "Month 2",
+                "title": "Core DSA",
+                "tasks": [
+                    "Deep dive into arrays, strings, linked lists",
+                    "Practice on CodeChef and LeetCode",
+                    "Start competitive programming",
+                    "Build small projects"
+                ],
+                "milestone": "Participate in first CodeChef contest"
+            },
+            {
+                "month": "Month 3",
+                "title": "Algorithm Mastery",
+                "tasks": [
+                    "Study sorting and searching algorithms",
+                    "Learn recursion and backtracking",
+                    "Solve CodeChef Long Challenge problems",
+                    "Work on portfolio projects"
+                ],
+                "milestone": "Achieve 2-star rating on CodeChef"
+            },
+            {
+                "month": "Month 4",
+                "title": "Advanced Topics",
+                "tasks": [
+                    "Master trees and graph algorithms",
+                    "Introduction to dynamic programming",
+                    "Participate in multiple contests",
+                    "Start open-source contributions"
+                ],
+                "milestone": "Solve 200+ problems across platforms"
+            },
+            {
+                "month": "Month 5",
+                "title": "Specialization",
+                "tasks": [
+                    "Choose focus area (Web Dev/AI/Mobile)",
+                    "Advanced DP and graph problems",
+                    "Build major project",
+                    "Prepare for internships"
+                ],
+                "milestone": "Complete one full-stack project"
+            },
+            {
+                "month": "Month 6",
+                "title": "Career Preparation",
+                "tasks": [
+                    "Mock interviews practice",
+                    "System design basics",
+                    "Resume building",
+                    "Apply for internships/college admissions"
+                ],
+                "milestone": "Ready for placements/admissions"
+            }
+        ]
+    
+    elif primary_domain == "Medical":
+        career_suggestions = [
+            {"title": "Doctor (MBBS)", "description": "Practice medicine and treat patients", "salary": "₹8-25 LPA"},
+            {"title": "Dentist (BDS)", "description": "Specialize in dental care", "salary": "₹6-20 LPA"},
+            {"title": "Physiotherapist", "description": "Help patients with physical rehabilitation", "salary": "₹4-12 LPA"},
+            {"title": "Medical Researcher", "description": "Conduct medical research", "salary": "₹6-18 LPA"}
+        ]
+        
+        college_recommendations = [
+            {
+                "name": "AIIMS Delhi",
+                "location": "Delhi",
+                "courses": ["MBBS", "B.Sc Nursing"],
+                "ranking": "Top Medical College in India",
+                "admission": "NEET",
+                "fees": "Minimal (Government college)",
+                "placements": "Government appointments and private practice",
+                "website": "https://www.aiims.edu"
+            },
+            {
+                "name": "CMC Vellore",
+                "location": "Vellore, Tamil Nadu",
+                "courses": ["MBBS", "BDS", "B.Sc Nursing"],
+                "ranking": "NIRF Ranked #3 (Medical)",
+                "admission": "NEET",
+                "fees": "₹85,000 per year",
+                "placements": "Excellent hospital placements",
+                "website": "https://www.cmch-vellore.edu"
+            }
+        ]
+        
+        roadmap = [
+            {"month": "Month 1", "title": "NEET Preparation Start", "tasks": ["Join coaching", "NCERT mastery", "Biology focus"], "milestone": "Complete 20% syllabus"},
+            {"month": "Month 2", "title": "Physics & Chemistry", "tasks": ["Daily practice", "Mock tests", "Doubt clearing"], "milestone": "Complete 40% syllabus"},
+            {"month": "Month 3", "title": "Intensive Practice", "tasks": ["Full-length tests", "Weak areas focus", "Speed improvement"], "milestone": "Score 600+/720 in mocks"},
+            {"month": "Month 4", "title": "Revision Phase", "tasks": ["Complete revision", "Previous year papers", "Time management"], "milestone": "Complete all topics"},
+            {"month": "Month 5", "title": "Final Preparation", "tasks": ["Daily full tests", "Formula revision", "Stay healthy"], "milestone": "Consistent 650+ scores"},
+            {"month": "Month 6", "title": "NEET & Counseling", "tasks": ["Appear for NEET", "College research", "Counseling preparation"], "milestone": "Clear NEET, secure admission"}
+        ]
+    
+    elif primary_domain == "Commerce":
+        career_suggestions = [
+            {"title": "Chartered Accountant (CA)", "description": "Financial audit and consulting", "salary": "₹7-25 LPA"},
+            {"title": "Company Secretary (CS)", "description": "Corporate governance expert", "salary": "₹6-20 LPA"},
+            {"title": "Investment Banker", "description": "Financial services and investments", "salary": "₹10-35 LPA"},
+            {"title": "Financial Analyst", "description": "Analyze financial data and trends", "salary": "₹5-18 LPA"}
+        ]
+        
+        college_recommendations = [
+            {
+                "name": "Shri Ram College of Commerce (SRCC)",
+                "location": "Delhi",
+                "courses": ["B.Com (Hons)", "BA Economics"],
+                "ranking": "NIRF Ranked #1 (Commerce)",
+                "admission": "CUET",
+                "fees": "₹20,000 per year",
+                "placements": "Average: ₹8 LPA",
+                "website": "https://www.srcc.edu"
+            }
+        ]
+        
+        roadmap = [
+            {"month": "Month 1", "title": "Commerce Basics", "tasks": ["Accountancy fundamentals", "Business studies", "Economics basics"], "milestone": "Clear concepts"},
+            {"month": "Month 2-3", "title": "CA Foundation Prep", "tasks": ["Register for CA", "Study CA Foundation syllabus", "Mock tests"], "milestone": "Complete 50% syllabus"},
+            {"month": "Month 4-5", "title": "Advanced Topics", "tasks": ["Corporate accounting", "Taxation basics", "Practice problems"], "milestone": "Ready for CA Foundation"},
+            {"month": "Month 6", "title": "Exams & College Prep", "tasks": ["Appear for CA Foundation", "CUET preparation", "College applications"], "milestone": "Clear exams"}
+        ]
+    
+    elif primary_domain == "Arts":
+        career_suggestions = [
+            {"title": "Civil Services (IAS/IPS)", "description": "Administrative and police services", "salary": "₹56,000-2.5 Lakhs/month"},
+            {"title": "Journalist", "description": "Media and news reporting", "salary": "₹4-15 LPA"},
+            {"title": "Content Writer", "description": "Creative writing for digital media", "salary": "₹3-12 LPA"},
+            {"title": "Psychologist", "description": "Mental health counseling", "salary": "₹4-15 LPA"}
+        ]
+        
+        college_recommendations = [
+            {
+                "name": "St. Stephen's College",
+                "location": "Delhi",
+                "courses": ["BA (Various subjects)"],
+                "ranking": "Top Arts College",
+                "admission": "CUET",
+                "fees": "₹40,000 per year",
+                "placements": "Civil services and corporate",
+                "website": "https://www.ststephens.edu"
+            }
+        ]
+        
+        roadmap = [
+            {"month": "Month 1-2", "title": "Stream Selection", "tasks": ["Choose BA subjects", "UPSC/State PSC research", "Reading habit"], "milestone": "Clear goal"},
+            {"month": "Month 3-4", "title": "CUET Preparation", "tasks": ["Domain subjects prep", "General test practice", "Mock tests"], "milestone": "CUET ready"},
+            {"month": "Month 5-6", "title": "Admission & Start", "tasks": ["College admission", "Join UPSC coaching", "Start preparation"], "milestone": "Secure admission"}
+        ]
+    
+    result = {
+        "id": str(uuid.uuid4()),
+        "user_id": current_user['id'],
+        "domain_scores": domain_scores,
+        "top_domains": [{"domain": d[0], "score": d[1]} for d in top_domains],
+        "primary_domain": primary_domain,
+        "career_suggestions": career_suggestions,
+        "college_recommendations": college_recommendations,
+        "coding_timeline": coding_timeline,
+        "roadmap": roadmap,
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    
+    await db.aptitude_results.insert_one(result)
+    
+    return result
+
+@api_router.get("/aptitude-test/results")
+async def get_user_results(current_user: dict = Depends(get_current_user)):
+    results = await db.aptitude_results.find(
+        {"user_id": current_user['id']},
+        {"_id": 0}
+    ).sort("created_at", -1).limit(5).to_list(5)
+    return {"results": results}
+
+@api_router.get("/aptitude-test/result/{result_id}")
+async def get_result_detail(result_id: str, current_user: dict = Depends(get_current_user)):
+    result = await db.aptitude_results.find_one(
+        {"id": result_id, "user_id": current_user['id']},
+        {"_id": 0}
+    )
+    if not result:
+        raise HTTPException(status_code=404, detail="Result not found")
+    return {"result": result}
+
 app.include_router(api_router)
 
 app.add_middleware(
