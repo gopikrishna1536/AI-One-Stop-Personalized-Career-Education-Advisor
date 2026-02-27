@@ -1,0 +1,170 @@
+{
+  "project_name": "EduPath India – AI Career Guidance Platform",
+  "design_philosophy": {
+    "identity": "The Academic Orchard",
+    "core_values": [
+      "Growth & Rootedness",
+      "Clarity amidst Chaos",
+      "Aspiration for All"
+    ],
+    "mood": "Hopeful, Structured, Intelligent, Indian-Modern",
+    "theme_strategy": "Light Mode Dominant (Education/Clarity) with High-Contrast Text",
+    "anti_patterns": [
+      "Standard Government Blue/White Portals",
+      "Generic Dashboard Grids",
+      "Overused Saffron/Green gradients"
+    ]
+  },
+  "typography": {
+    "font_family": {
+      "headings": "Clash Display, Manrope, sans-serif",
+      "body": "Plus Jakarta Sans, Inter, sans-serif",
+      "accent": "Outfit, sans-serif"
+    },
+    "scale": {
+      "h1": "text-4xl md:text-6xl font-semibold tracking-tight",
+      "h2": "text-3xl md:text-5xl font-medium tracking-tight",
+      "h3": "text-2xl md:text-3xl font-medium",
+      "body_lg": "text-lg md:text-xl leading-relaxed",
+      "body": "text-base leading-relaxed text-muted-foreground",
+      "small": "text-sm font-medium tracking-wide uppercase"
+    },
+    "rules": [
+      "Use Clash Display for Hero sections and major headings to give a 'Modern Institutional' feel.",
+      "Use Plus Jakarta Sans for all long-form text and UI elements for maximum legibility.",
+      "Avoid 'Inter' for headings. It makes the site look like a generic SaaS.",
+      "Headings should often use 'Tight' tracking."
+    ]
+  },
+  "colors": {
+    "palette": {
+      "primary": {
+        "DEFAULT": "#1e1b4b",
+        "foreground": "#ffffff",
+        "description": "Deep Indigo - Represents Knowledge, Depth, and Authority."
+      },
+      "secondary": {
+        "DEFAULT": "#f59e0b",
+        "foreground": "#1e1b4b",
+        "description": "Indian Marigold - Represents Success, Auspiciousness, and Warmth."
+      },
+      "accent": {
+        "DEFAULT": "#14b8a6",
+        "foreground": "#ffffff",
+        "description": "Growth Teal - Used for progress bars, success states, and fresh starts."
+      },
+      "background": {
+        "DEFAULT": "#fdfbf7",
+        "paper": "#ffffff",
+        "description": "Warm Off-White - Mimics paper/books, easier on eyes than pure white."
+      },
+      "muted": {
+        "DEFAULT": "#f3f4f6",
+        "foreground": "#64748b"
+      }
+    },
+    "gradients": {
+      "hero": "bg-gradient-to-br from-[#1e1b4b] via-[#312e81] to-[#1e1b4b]",
+      "card_hover": "bg-gradient-to-br from-white to-[#fdfbf7]",
+      "text_highlight": "bg-clip-text text-transparent bg-gradient-to-r from-[#1e1b4b] to-[#4338ca]"
+    },
+    "accessibility": {
+      "rule": "Ensure 4.5:1 contrast ratio for all body text. Use dark indigo (#1e1b4b) for text instead of pure black for better readability."
+    }
+  },
+  "layout_strategies": {
+    "bento_grid": {
+      "description": "Use for Student Dashboard. Mix of square and rectangular cards.",
+      "classes": "grid grid-cols-1 md:grid-cols-3 gap-6",
+      "items": [
+        "Profile Summary (col-span-1)",
+        "Career Roadmap (col-span-2 row-span-2)",
+        "Next Deadline (col-span-1)"
+      ]
+    },
+    "career_path_tree": {
+      "description": "Visual representation of career steps. Do not use a simple list.",
+      "implementation": "Use a vertical timeline with branching nodes. Use SVG lines to connect steps."
+    },
+    "container_padding": {
+      "mobile": "px-4 py-6",
+      "desktop": "px-8 py-12 lg:px-16 lg:py-20"
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": "rounded-full px-8 py-6 text-lg font-medium shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1",
+      "secondary": "rounded-full px-6 py-4 border-2 border-[#1e1b4b]/10 hover:bg-[#1e1b4b]/5 transition-all"
+    },
+    "cards": {
+      "style": "bg-white border border-[#1e1b4b]/10 rounded-xl shadow-sm hover:shadow-md transition-all duration-300",
+      "interaction": "Add a subtle 'lift' on hover (translate-y-1)"
+    },
+    "inputs": {
+      "style": "h-12 rounded-lg border-gray-200 focus:border-[#1e1b4b] focus:ring-[#1e1b4b]/20 bg-[#f9fafb]"
+    },
+    "visual_enhancers": {
+      "glassmorphism": "backdrop-blur-md bg-white/70 border-white/20",
+      "grain_overlay": "opacity-5 mix-blend-overlay pointer-events-none fixed inset-0 z-50 url('https://grainy-gradients.vercel.app/noise.svg')"
+    }
+  },
+  "assets": {
+    "images": [
+      {
+        "category": "hero_student",
+        "url": "https://images.unsplash.com/photo-1719245309441-c577e0d1959d?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "description": "Modern Indian student with laptop - use for Landing Page Hero"
+      },
+      {
+        "category": "government_context",
+        "url": "https://images.unsplash.com/photo-1680084521631-e4e6d77704d8?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "description": "Large institutional building with flag - use for Government College Directory header"
+      },
+      {
+        "category": "success_celebration",
+        "url": "https://images.unsplash.com/photo-1748542685954-e49304dd4c3a?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "description": "Graduate celebrating - use for 'Success Stories' or completion steps"
+      },
+      {
+        "category": "classroom_context",
+        "url": "https://images.unsplash.com/photo-1709290749293-c6152a187b14?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "description": "Classroom full of students - use for 'Community' or 'About Us'"
+      },
+      {
+        "category": "rural_access",
+        "url": "https://images.unsplash.com/photo-1645538165779-81d7f49baa6f?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "description": "Woman using mobile phone - use for 'Mobile Accessibility' feature section"
+      },
+      {
+        "category": "career_abstract",
+        "url": "https://images.unsplash.com/photo-1705167067400-0cca32706d97?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "description": "Abstract lines - use for background of 'Career Roadmap' section"
+      }
+    ],
+    "icons_library": "lucide-react (default), @phosphor-icons/react (for dashboard)"
+  },
+  "motion": {
+    "page_transition": "initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}",
+    "hover_effects": "whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}",
+    "stagger": "staggerChildren: 0.1"
+  },
+  "instructions_to_main_agent": [
+    "Use standard HTML/Tailwind for Marketing Pages, but Shadcn components for the Dashboard.",
+    "The 'Career Roadmap' is the core feature. Spend extra effort making it visual. It should look like a Metro Map or a Tree, not a list.",
+    "Ensure the Chatbot is accessible via a floating action button (FAB) on mobile.",
+    "Use 'Sonner' for all toast notifications.",
+    "Strictly follow the color palette. Do not introduce random colors.",
+    "The 'Government' aspect implies trust. Avoid overly chaotic layouts. Keep it structured.",
+    "Remember to create .jsx files, not .tsx files.",
+    "Add 'data-testid' to all interactive elements."
+  ],
+  "universal_guidelines": [
+    "Don't make generic centered layouts.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use glass-morphism effects with backdrop filters.",
+    "Do NOT apply universal transition 'all'.",
+    "Do NOT center align the App container.",
+    "Every interaction needs micro-animations.",
+    "Use 2-3x more spacing than feels comfortable."
+  ]
+}
