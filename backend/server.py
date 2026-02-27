@@ -818,7 +818,8 @@ async def submit_aptitude_test(submission: AptitudeTestSubmission, current_user:
         "created_at": datetime.now(timezone.utc).isoformat()
     }
     
-    await db.aptitude_results.insert_one(result)
+    result_copy = result.copy()
+    await db.aptitude_results.insert_one(result_copy)
     
     return result
 
