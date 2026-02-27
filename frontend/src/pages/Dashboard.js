@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { LogOut, MessageCircle, BookOpen, Calendar, User, MapPin, TrendingUp, GraduationCap, Menu, X } from 'lucide-react';
+import { LogOut, MessageCircle, BookOpen, Calendar, User, MapPin, TrendingUp, GraduationCap, Menu, X, Target } from 'lucide-react';
 import { toast } from 'sonner';
 import api from '@/utils/api';
 
