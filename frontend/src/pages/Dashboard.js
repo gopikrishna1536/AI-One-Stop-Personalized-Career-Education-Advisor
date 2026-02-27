@@ -139,6 +139,16 @@ const Dashboard = ({ user }) => {
             {/* Quick Actions */}
             <div className="grid md:grid-cols-3 gap-6 mb-12">
               <button
+                onClick={() => navigate('/aptitude-test')}
+                data-testid="quick-action-aptitude"
+                className="bg-gradient-to-br from-[#14b8a6] to-[#0d9488] text-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group"
+              >
+                <Target className="w-12 h-12 mb-4 group-hover:scale-110 transition-transform" />
+                <h3 className="text-2xl font-semibold mb-2">Career Aptitude Test</h3>
+                <p className="opacity-90">Take our 12-question test and get personalized roadmap</p>
+              </button>
+
+              <button
                 onClick={() => navigate('/chatbot')}
                 data-testid="quick-action-chatbot"
                 className="bg-gradient-to-br from-[#1e1b4b] to-[#312e81] text-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group"
@@ -156,16 +166,6 @@ const Dashboard = ({ user }) => {
                 <MapPin className="w-12 h-12 mb-4 text-[#f59e0b] group-hover:scale-110 transition-transform" />
                 <h3 className="text-2xl font-semibold text-[#1e1b4b] mb-2">Explore Colleges</h3>
                 <p className="text-[#64748b]">Find government colleges near you</p>
-              </button>
-
-              <button
-                onClick={() => navigate('/timeline')}
-                data-testid="quick-action-timeline"
-                className="bg-white border-2 border-[#1e1b4b]/10 p-8 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 group"
-              >
-                <Calendar className="w-12 h-12 mb-4 text-[#14b8a6] group-hover:scale-110 transition-transform" />
-                <h3 className="text-2xl font-semibold text-[#1e1b4b] mb-2">Important Dates</h3>
-                <p className="text-[#64748b]">Track admission & exam deadlines</p>
               </button>
             </div>
 
