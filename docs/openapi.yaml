@@ -1,0 +1,47 @@
+openapi: 3.0.3
+info:
+  title: AI Career & Education Advisor API
+  description: Comprehensive RESTful services for career counseling, skill gap analysis, and learning roadmaps.
+  version: 2.0.0
+paths:
+  /api/skills/gap-analysis:
+    post:
+      summary: Analyze candidate skill gaps against target role taxonomy
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                skills:
+                  type: array
+                  items:
+                    type: string
+                target_role:
+                  type: string
+      responses:
+        '200':
+          description: Skill gap analysis results and readiness score
+  /api/compensation/estimate:
+    get:
+      summary: Get estimated market salary benchmark
+      parameters:
+        - name: role
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: experience_years
+          in: query
+          required: true
+          schema:
+            type: number
+        - name: location
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Compensation percentiles and cost of living multiplier
