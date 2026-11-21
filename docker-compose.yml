@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: edupath_mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: edupath_india
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build: .
+    container_name: edupath_fastapi_server
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      PORT: 8000
+      MONGO_URL: mongodb://mongodb:27017
+      DB_NAME: edupath_india
+      JWT_SECRET: dev_jwt_secret_career_advisor_2026
+    depends_on:
+      - mongodb
+
+volumes:
+  mongo_data:
